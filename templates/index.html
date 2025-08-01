@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Decision Maker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulseScale {
+            0% { transform: scale(0.95); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes borderPulse {
+            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+            50% { box-shadow: 0 0 0 6px rgba(99, 102, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes buttonPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .slide-in-left {
+            animation: slideInLeft 0.5s ease-in-out forwards;
+        }
+        .pulse-scale {
+            animation: pulseScale 0.7s ease-in-out;
+        }
+        .border-pulse {
+            animation: borderPulse 2s infinite ease-in-out;
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        .button-pulse {
+            animation: buttonPulse 2s infinite ease-in-out;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .quantum-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-100 min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+    <div class="max-w-6xl w-full">
+        <h1 class="text-4xl md:text-5xl font-bold text-center text-indigo-700 mb-4 fade-in">Quantum Decision Maker</h1>
+        <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto fade-in">Ask a question, and let quantum mechanics decide! Watch the quantum process unfold on the left, and see your answer on the right.</p>
+        
+        <form method="POST" class="flex flex-col items-center mb-8">
+            <input type="text" name="question" placeholder="Enter your question (e.g., Should I have coffee?)" 
+                   class="w-full max-w-lg p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4"
+                   autocomplete="off">
+            <button type="submit" 
+                    class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 button-pulse">
+                Ask the Quantum Universe
+            </button>
+        </form>
+
+        {% if question %}
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- Quantum Information Boxes (Left) -->
+                <div class="w-full md:w-1/2 flex flex-col gap-4">
+                    <div class="slide-in-left quantum-box bg-white p-6 rounded-lg shadow-lg border-l-4 border-indigo-500">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-2">Your Question</h2>
+                        <p class="text-gray-600">{{ question }}</p>
+                    </div>
+                    {% if result %}
+                        <div class="slide-in-left quantum-box bg-white p-6 rounded-lg shadow-lg border-l-4 border-purple-500" style="animation-delay: 0.1s;">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-2">Measurement Outcome</h2>
+                            <p class="text-gray-600">Qubit State: <span class="font-mono text-purple-600">{{ result.outcome }}</span></p>
+                        </div>
+                        <div class="slide-in-left quantum-box bg-white p-6 rounded-lg shadow-lg border-l-4 border-blue-500" style="animation-delay: 0.2s;">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-2">Quantum Circuit</h2>
+                            <pre class="text-sm text-gray-800 bg-gray-100 p-3 rounded">{{ result.circuit }}</pre>
+                        </div>
+                        <div class="slide-in-left quantum-box bg-white p-6 rounded-lg shadow-lg border-l-4 border-teal-500" style="animation-delay: 0.3s;">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-2">Quantum Principles</h2>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li><strong>Superposition:</strong> {{ result.explanations.superposition }}</li>
+                                <li><strong>Entanglement:</strong> {{ result.explanations.entanglement }}</li>
+                                <li><strong>Rotation:</strong> {{ result.explanations.rotation }}</li>
+                                <li><strong>Measurement:</strong> {{ result.explanations.measurement }}</li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Answer Box (Right) -->
+                {% if result %}
+                    <div class="w-full md:w-1/2 flex">
+                        <div class="pulse-scale border-pulse bg-indigo-600 text-white p-8 rounded-lg shadow-xl w-full">
+                            <h2 class="text-2xl font-bold mb-4">Quantum Answer</h2>
+                            <p class="text-xl">{{ result.answer }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Apply animations on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const slideElements = document.querySelectorAll('.slide-in-left');
+            slideElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.classList.add('slide-in-left');
+                }, index * 100);
+            });
+            const pulseElements = document.querySelectorAll('.pulse-scale');
+            pulseElements.forEach(el => {
+                el.classList.add('pulse-scale');
+            });
+        });
+    </script>
+</body>
+</html>
