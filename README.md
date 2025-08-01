@@ -5,7 +5,7 @@
 
 
 ## Basic Details
-### Team Name: [SJ]
+### Team Name: SJ
 
 
 ### Team Members
