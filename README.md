@@ -12,6 +12,9 @@
 - **Team Lead**: Sanjana R Rao - ASIET, Kalady
 - **Member 2**: Brian Roy Mathew - ASIET, KALADY
 
+### Project URL
+https://kwantum-decision-maker.onrender.com/
+
 ### Project Description
 Quantum Decision Maker is an absurd web application that harnesses the power of quantum mechanics to answer your most pressing (or utterly trivial) questions! 
 Built with *Flask and Qiskit*, the app simulates a 2-qubit quantum circuit to generate answers that are as unpredictable as a quantum wavefunction. 
