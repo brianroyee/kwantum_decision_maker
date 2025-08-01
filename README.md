@@ -53,10 +53,10 @@ Open `http://localhost:5000` in your browser.
 ### Project Documentation
 For Software:
 
-<img src="/home/vyre/Projects/QUANTUM/images/1.png">
+<img src="/images/1.png">
 The Landing Page
 
-<img src="/home/vyre/Projects/QUANTUM/images/2.png">
+<img src="/images/2.png">
 Question response 
 
 ## Team Contributions
